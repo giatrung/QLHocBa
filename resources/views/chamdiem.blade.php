@@ -1,6 +1,7 @@
 @extends('home')
 
 @section('chamdiem')
+
 <a href="{{route('filters',['lop'=>$lop,'namhoc'=>$namhoc])}}">Trở về trang DS Học sinh</a>
 <div>
     <h2 class="text-center">Bảng điểm</h2>
@@ -19,6 +20,7 @@
             </tr>
         </thead>
         <tbody>
+        <?php $err=''?>
         @if (isset($chunhiem) && isset($monHocs) && $chunhiem['data']['lop_id']['TenLop'] == $lop)
             @foreach ($monHocs as $monhoc)
             <form action="{{route('chamdiemact',['hocsinh_id'=>$id,'monhoc_id'=>$monhoc->id])}}" method="POST">
@@ -30,13 +32,15 @@
                 <td><input value="0" type="number" name="CaNam" min="0" max="10"></td>
                 <td><input value="0" type="number" name="ThiLai" min="0" max="10"></td>
                 <td class="text-center">
-                    @if ($damnhiem!=[] || !$damnhiem)
-                        @foreach ($damnhiem['data'] as $valueDamnhiem)
-                            @if ($valueDamnhiem['monhoc_id']== $value['monhoc_id'] && $valueDamnhiem['lop_id']['TenLop']== $lop)
-                                {{$valueDamnhiem['gv_id']['name']}}
-                            @endif
-                        @endforeach
-                    @endif
+                    @if ((count($damnhiem)!=0 || isset($damnhiem)) && isset($gv_bomon))
+                    @foreach ($damnhiem['data'] as $valueDamnhiem)
+                         @if ($gv_bomon['gv_id']== $valueDamnhiem['gv_id']['id'] && $valueDamnhiem['lop_id']['TenLop']== $lop)
+                             {{$valueDamnhiem['gv_id']['name']}}
+                         @endif
+                    @endforeach
+                 @else
+                     <?php $err='Oops! đã xảy ra lỗi đâu đó!'?>
+                @endif
                  </td>
             </tr>
         </form>
@@ -61,4 +65,9 @@
         </tbody>
     </table>
 </div>
+@if ($err!='')
+<div class="alert alert-danger mt-3">
+    {{$error}} <br>
+</div>
+@endif
 @endsection

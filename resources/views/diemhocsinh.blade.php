@@ -20,6 +20,7 @@
         </thead>
         <tbody>
             {{--  {{dd($damnhiem)}}  --}}
+            <?php $err=''?>
             @if (!empty($diem) && $diem!=null)
                 @foreach ( $diem['data'] as $value)
                <tr>
@@ -29,18 +30,30 @@
                    <td class="text-center">{{$value['ThiLai']??''}}</td>
                    <td class="text-center">{{$value['CaNam']??''}}</td>
                    <td class="text-center">
-                   @if ($damnhiem!=[] || !$damnhiem)
+                   @if ((count($damnhiem)!=0 || isset($damnhiem)) && (count($gv_bomon)!=0 || isset($gv_bomon)))
                        @foreach ($damnhiem['data'] as $valueDamnhiem)
-                           @if ($valueDamnhiem['monhoc_id']== $value['monhoc_id'] && $valueDamnhiem['lop_id']['TenLop']== $lop)
-                               {{$valueDamnhiem['gv_id']['name']}}
-                           @endif
+                        @foreach ($gv_bomon as $valueGv_bomon)
+                            @if ($valueGv_bomon['gv_id']== $valueDamnhiem['gv_id']['id'] && $valueDamnhiem['lop_id']['TenLop']== $lop)
+                                {{$valueDamnhiem['gv_id']['name']}}
+                            @endif
+                        @endforeach
                        @endforeach
+                    @else
+                        <?php $err='Oops! đã xảy ra lỗi đâu đó!'?>
                    @endif
+
                 </td>
                </tr>
                 @endforeach
+            @else
+                        <?php $err='Oops! đã xảy ra lỗi đâu đó!'?>
             @endif
         </tbody>
     </table>
 </div>
+@if ($err!='')
+<div class="alert alert-danger mt-3">
+    {{$error}} <br>
+</div>
+@endif
 @endsection

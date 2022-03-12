@@ -16,7 +16,7 @@ class DiemController extends Controller
             $monHoc = \App\Models\MonHoc::select("id", "tenmonhoc")->get();
             $lopdamnhiem = self::getChuNhiemAndDamNhiem()[1]->where('deleted_at',null)->get();
             $chunhiem = self::getChuNhiemAndDamNhiem()[0]->where('deleted_at',null)->first();
-            $gvBoMon = \App\Models\GiaoVienBoMon::where('gv_id',request()->user()->id)->get();
+            $gvBoMon = \App\Models\GiaoVienBoMon::where('gv_id',request()->user()->id)->first();
             return view('chamdiem',
             [
                 'id' =>$request->hocsinh,
@@ -25,7 +25,7 @@ class DiemController extends Controller
                 'namhoc'=>request('namhoc'),
                 'chunhiem'=>\App\Http\Resources\ChuNhiemResource::make($chunhiem)->response()->getData(true),
                 'damnhiems'=>\App\Http\Resources\DamNhiemResource::collection($lopdamnhiem)->response()->getData(true),
-                'gv_bomon'=>\App\Http\Resources\GiaoVienBoMonResource::collection($gvBoMon)->response()->getData(true),
+                'gv_bomon'=>$gvBoMon,
                 'damnhiem'=>\App\Http\Resources\DamNhiemResource::collection($damnhiem)->response()->getData(true),
             ]);
 
