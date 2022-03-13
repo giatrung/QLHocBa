@@ -19,7 +19,6 @@
             </tr>
         </thead>
         <tbody>
-            {{--  {{dd($damnhiem)}}  --}}
             <?php $err=''?>
             @if (!empty($diem) && $diem!=null)
                 @foreach ( $diem['data'] as $value)

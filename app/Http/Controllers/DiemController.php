@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class DiemController extends Controller
 {
+
     public static function chamdiem(Request $request)
     {
         try {
@@ -17,6 +18,7 @@ class DiemController extends Controller
             $lopdamnhiem = self::getChuNhiemAndDamNhiem()[1]->where('deleted_at',null)->get();
             $chunhiem = self::getChuNhiemAndDamNhiem()[0]->where('deleted_at',null)->first();
             $gvBoMon = \App\Models\GiaoVienBoMon::where('gv_id',request()->user()->id)->first();
+            $listGVBoMon = \App\Models\GiaoVienBoMon::get();
             return view('chamdiem',
             [
                 'id' =>$request->hocsinh,
@@ -25,10 +27,10 @@ class DiemController extends Controller
                 'namhoc'=>request('namhoc'),
                 'chunhiem'=>\App\Http\Resources\ChuNhiemResource::make($chunhiem)->response()->getData(true),
                 'damnhiems'=>\App\Http\Resources\DamNhiemResource::collection($lopdamnhiem)->response()->getData(true),
-                'gv_bomon'=>$gvBoMon,
+                'gv_bomon'=>\App\Http\Resources\GiaoVienBoMonResource::make($gvBoMon)->response()->getData(true),
                 'damnhiem'=>\App\Http\Resources\DamNhiemResource::collection($damnhiem)->response()->getData(true),
+                'listGVBoMon'=>\App\Http\Resources\GiaoVienBoMonResource::collection($listGVBoMon)->response()->getData(true),
             ]);
-
         } catch (\Exception $err) {
             throw $err;
         }

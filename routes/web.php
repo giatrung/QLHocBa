@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
@@ -38,6 +36,6 @@ Route::get('/giaovien/phanlop',[App\Http\Controllers\GiaovienController::class, 
 Route::post('/giaovien/phanlop',[App\Http\Controllers\GiaovienController::class, 'storeLop'])->name('storeLop');
 Route::get('/giaovien/chamdiem/{hocsinh}',[App\Http\Controllers\DiemController::class, 'chamdiem'])->name('chamdiem');
 Route::post('/giaovien/chamdiem',[App\Http\Controllers\DiemController::class, 'chamdiemact'])->name('chamdiemact');
-
+Route::post('/giaovien/timkiem',[App\Http\Controllers\GiaovienController::class, 'search'])->name('search');
 
 Route::post('/taolop',[App\Http\Controllers\LopController::class,'create'])->name('createLop');
