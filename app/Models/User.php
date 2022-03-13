@@ -49,4 +49,7 @@ class User extends Authenticatable
         'updated_at',
         'deleted_at',
     ];
+    public function getBoMon(){
+        return $this->belongsTo('App\Models\GiaoVienBoMon', 'monhoc_id', 'id')->setEagerLoads([]);
+    }
 }

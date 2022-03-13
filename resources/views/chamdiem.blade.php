@@ -34,9 +34,11 @@
                 <td class="text-center">
                     @if ((count($damnhiem)!=0 || isset($damnhiem)) && isset($gv_bomon))
                     @foreach ($damnhiem['data'] as $valueDamnhiem)
-                         @if ($gv_bomon['gv_id']== $valueDamnhiem['gv_id']['id'] && $valueDamnhiem['lop_id']['TenLop']== $lop)
-                             {{$valueDamnhiem['gv_id']['name']}}
-                         @endif
+                        @foreach ($listGVBoMon['data'] as $valueGv_bomon)
+                            @if ($valueGv_bomon['gv_id']== $valueDamnhiem['gv_id']['id'] && $valueDamnhiem['lop_id']['TenLop']== $lop)
+                                {{$valueDamnhiem['gv_id']['name']}}
+                            @endif
+                        @endforeach
                     @endforeach
                  @else
                      <?php $err='Oops! đã xảy ra lỗi đâu đó!'?>

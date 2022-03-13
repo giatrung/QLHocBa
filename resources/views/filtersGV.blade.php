@@ -2,9 +2,9 @@
 @section('filtersGV')
 <h2 class="text-center mb-4">Danh sách giáo viên</h2>
 <div>
-    <form class="mb-3" action="{{ route('filterGV')}}" method="POST">
+    <form class="mb-3" action="{{ route('search')}}" method="POST">
         @csrf
-       <label for="">Bộ môn:</label>
+       <label for="bomon">Bộ môn:</label>
        <select class="form-control d-inline text-center" style="width:25%" name="bomon" id="">
            @if(!empty($bomon))
                 <option value="0">Tất cả</option>
@@ -18,9 +18,9 @@
        <button class="btn btn-primary mb-2">Tìm</button>
     </form>
     @if (session('status'))
-    <div class="alert alert-success mt-3" role="alert">
-        {{session('status')}}
-    </div>
+        <div class="alert alert-success mt-3" role="alert">
+            {{session('status')}}
+        </div>
     @endif
     <table class="table table-bordered table-hover" style="width:100%">
         <thead class="text-center">
@@ -45,7 +45,6 @@
                         <td><a href="{{route('phanlop',['id'=>$value->id])}}">{{$value->name}}</a></td>
                         <td>{{$value->email}}</td>
                         <td>
-                           {{--  {{ dd($giaovienbomon);}}  --}}
                             @if (isset($giaovienbomon)||$giaovienbomon!=[] || !$giaovienbomon)
                                 @foreach ($giaovienbomon['data'] as $valuegiaovienbomon )
                                     @if ($valuegiaovienbomon['gv_id']['id'] == $value->id)
@@ -84,7 +83,6 @@
                 <?php $i++?>
                 </form>
                 @endforeach
-             
            @endif
            <tr></tr>
        </tbody>

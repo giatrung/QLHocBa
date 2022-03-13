@@ -97,7 +97,7 @@ class HocSinhController extends Controller
             ]);
 
         } catch (\Exception $err) {
-            dd($err);
+            throw($err);
         }
     }
     public function getChuNhiemAndDamNhiem(){

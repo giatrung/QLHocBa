@@ -16,6 +16,10 @@ use Illuminate\Http\Request;
 
 class GiaovienController extends Controller
 {
+    public static function search(Request $request){
+        $gv_list=\App\Models\User::select('')->where('deleted_at',null)->where('name',$request->ten)->get();
+        dd($gv_list);
+    }
     public function filterGV()
     {
         try {

@@ -26,6 +26,10 @@ class Import implements WithMultipleSheets, WithHeadingRow, WithValidation, ToCo
     {
         try {
             DB::beginTransaction();
+            $namhoc=null;
+            if(request('namhoc1')!=null && request('namhoc2')!=null){
+                $namhoc=request('namhoc1').'-'.request('namhoc2');
+            }
             foreach ($rows as $row) {
                 DanhSachHocSinh::firstOrCreate([
                     'STT' => $row['stt'],
@@ -34,15 +38,15 @@ class Import implements WithMultipleSheets, WithHeadingRow, WithValidation, ToCo
                     'NgaySinh' => $row['ngay_sinh'],
                     'DiaChi' => $row['dia_chi'],
                     'TenLop' => $row['lop'],
-                    'NamHoc' => $row['nam_hoc']??request('namhoc1').'-'.request('namhoc2'),
+                    'NamHoc' => $namhoc,
                 ]);
                 Lop::firstOrCreate([
                     'TenLop' => strtoupper($row['lop'])
                 ]);
-                NamHoc::firstOrCreate([
-                    'tennamhoc' => $row['nam_hoc']
-                ]);
             }
+            NamHoc::firstOrCreate([
+                'tennamhoc' => $namhoc
+            ]);
             DB::commit();
         } catch (\Illuminate\Database\QueryException $ex) {
             DB::rollBack();
